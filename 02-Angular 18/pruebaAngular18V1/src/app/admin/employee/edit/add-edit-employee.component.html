@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center mt-5" *ngIf="formInitialized">
+    <div class="col-12 col-lg-5">
+        <main class="form-signin">
+            <form [formGroup]="employeeForm" (ngSubmit)="submit()" autocomplete="off">
+                <div class="text-center mb-4">
+                    <h3 class="mb-3 font-weight-normal">
+                        <span class="text-warning" *ngIf="addNew">Crear</span>
+                        <span class="text-warning" *ngIf="!addNew">Actualizar</span>
+                        Empleados
+                    </h3>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input formControlName="names" type="text" placeholder="Nombre" class="form-control"
+                        [class.is-invalid]="submitted && employeeForm.get('names')?.errors">
+                    <label for="names">Nombre</label>
+                    <span class="text-danger" *ngIf="submitted && employeeForm.get('names')?.hasError('required')">
+                        Nombre es requirido
+                    </span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input formControlName="email" type="text" placeholder="Email" class="form-control"
+                        [class.is-invalid]="submitted && employeeForm.get('email')?.errors">
+                    <label for="email">Email</label>
+                    <span class="text-danger" *ngIf="submitted && employeeForm.get('email')?.hasError('required')">
+                        Email es requirido
+                    </span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input formControlName="phone" type="text" placeholder="Teléfono" class="form-control"
+                        [class.is-invalid]="submitted && employeeForm.get('phone')?.errors">
+                    <label for="phone">Teléfono</label>
+                    <span class="text-danger" *ngIf="submitted && employeeForm.get('phone')?.hasError('required')">
+                        Teléfono es requirido
+                    </span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select formControlName="area" type="text" placeholder="Seleccione área" class="form-control clsAparenceNone"
+                        [class.is-invalid]="submitted && employeeForm.get('area')?.errors">
+                        <option [value]="item.id" *ngFor="let item of varListAreas">{{item.names}}</option>
+                    </select>
+
+                    <label for="area">Seleccione área</label>
+                    <span class="text-danger" *ngIf="submitted && employeeForm.get('area')?.hasError('required')">
+                        Teléfono es requirido
+                    </span>
+                </div>
+               
+
+                <div class="form-floatin" *ngIf="errorMessages.length > 0">
+                    <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+                </div>
+
+                <div class="row my-4">
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-block btn-info" type="submit">
+                                {{addNew ? 'Create' : 'Update'}} Empleado
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-block btn-danger" type="button" routerLink="/admin">
+                                Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </main>
+    </div>
+</div>

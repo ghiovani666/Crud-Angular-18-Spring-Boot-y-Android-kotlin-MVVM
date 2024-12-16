@@ -1,0 +1,70 @@
+<div class="container my-3 mt-5">
+
+    <div class="row my-4">
+        <div class="col-2">
+            <div class="d-grid">
+                <button class="btn btn-block btn-danger" (click)="logout()">
+                    LogOut
+                </button>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="d-grid">
+                <button class="btn btn-block btn-info" routerLink="/admin/create-employee">
+                    Crear
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-warning">
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Área</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="varListEmployee.length === 0">
+                    <td colspan="7" class="text-center">No Members</td>
+                </tr>
+
+                <tr *ngFor="let item of varListEmployee">
+                    <td>{{item.names}}</td>
+                    <td>{{item.email | titlecase}}</td>
+                    <td>{{item.phone | titlecase}}</td>
+                    <td>
+                        <span *ngFor="let itemArea of item.area | keyvalue">
+                            <p *ngIf="itemArea.key === 'names'">
+                                {{itemArea.value}}
+                            </p>
+                        </span>
+                    </td>
+
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-primary btn-sm me-2" routerLink="/admin/edit-employee/{{item.id}}">
+                                <i class="bi bi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteEmployee(item.id, template)">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #template>
+        <div class="modal-body text-center">
+            <p>¿Estas seguro de eliminar? {{varListEmployeeObject.names}}?</p>
+            <button type="button" class="btn btn-default" (click)="confirm()">Si</button>
+            <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+        </div>
+    </ng-template>
+</div>
